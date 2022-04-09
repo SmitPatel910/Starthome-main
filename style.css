@@ -16,9 +16,9 @@ h1 {
   animation: glitch 1s linear infinite;
 }
 
-h3 {
-  color: #9a9b9c;
-  font-size: 40px;
+h2 {
+  color: #ffffff;
+  font-size: 20px;
   animation: glitch 1s linear infinite;
 }
 
@@ -26,13 +26,74 @@ h3 {
   color: #ffffff;
   display: inline-flex;
   justify-content: space-around;
-  
 }
-.india{
-  margin: 0px 50px;
+
+
+
+.clockbox,
+#clock {
+    width: 38%;
+    height: 38%;
 }
-.arizona{
-  margin: 0px 50px;
+
+/* Clock styles */
+.circle {
+    fill: none;
+    stroke: rgb(255, 255, 255);
+    stroke-width: 9;
+    stroke-miterlimit: 10;
+}
+
+.mid-circle {
+    fill: rgb(0, 0, 0);
+}
+.hour-marks {
+    fill: none;
+    stroke: rgb(255, 255, 255);
+    stroke-width: 9;
+    stroke-miterlimit: 10;
+}
+
+.hour-arm {
+    fill: none;
+    stroke: rgb(255, 250, 250);
+    stroke-width: 17;
+    stroke-miterlimit: 10;
+}
+
+.minute-arm {
+    fill: none;
+    stroke: rgb(255, 255, 255);
+    stroke-width: 11;
+    stroke-miterlimit: 10;
+}
+
+.second-arm {
+    fill: none;
+    stroke: rgb(237, 237, 237);
+    stroke-width: 4;
+    stroke-miterlimit: 10;
+}
+
+/* Transparent box ensuring arms center properly. */
+.sizing-box {
+    fill: none;
+}
+
+/* Make all arms rotate around the same center point. */
+/* Optional: Use transition for animation. */
+#hour,
+#minute,
+#second {
+    transform-origin: 300px 300px;
+    transition: transform .5s ease-in-out;
+}
+
+#hourr,
+#minutee,
+#secondd {
+    transform-origin: 300px 300px;
+    transition: transform .5s ease-in-out;
 }
 
 .search_block {

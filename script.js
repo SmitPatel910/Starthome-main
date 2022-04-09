@@ -1,9 +1,7 @@
 window.addEventListener('load', (event) => {
 
-  // Variable Declare for India
-  let Indtoday, indtime, indHR, indMIN, ind_AM_PM, indDD, indMM, indYYYY, indDate;
-  // Variable Declare for Arizona
-  let aztime, azHR, azMIN, az_AM_PM, azDD, azMM, azYYYY, azDate;
+  // Variable Declare 
+  let Indtoday, indtime, indDD, indMM, indYYYY, indDate;
 
   Indtoday = new Date();
   indtime = Indtoday.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -17,113 +15,27 @@ window.addEventListener('load', (event) => {
   displayTime(indtime);
   displayIndDate(indDate);
 
-
-
-  //Indian time split to calculate arizona time
-  indHR = indtime.split(':')[0];
-  indMIN = indtime.split(':')[1].split(" ")[0];
-  ind_AM_PM = indtime.split(':')[1].split(" ")[1];
-
-
-  //  Convert Date for Arizona 
-
-  if(ind_AM_PM == "AM"){
-    if(indDD==1){
-      // Check for Date:: 1 - March
-      if(indMM == 3){
-        // Leap Year
-        if(indYYYY%4 == 0){
-          azDD = 29;
-          azMM = 2;
-          azYYYY = indYYYY;
-        }
-        // NonLeap Year
-        else{
-          azDD = 28;
-          azMM = 2;
-          azYYYY = indYYYY;
-        } 
+function httpGetAsync(url, callback) {
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState === 4 && xmlHttp.status === 200){
+        var fetch = JSON.parse(xmlHttp.responseText);
+        const arizonaTime = new Date(fetch.datetime);
+        azTime = arizonaTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        azDate = String(arizonaTime.getDate()).padStart(2, '0') + '/' + String(arizonaTime.getMonth()+ 1).padStart(2, '0') + '/' + String(arizonaTime.getFullYear()).padStart(2, '0');
+        displayAZtime(azTime);
+        displayAzDate(azDate);
       }
-      // Check for other than March Month
-      else{
-        // Check if 1st January or not
-        if(indMM == 1){
-          azDD = 31;
-          azMM = 12;
-          azYYYY = indYYYY-1;
-        }
-        // Check for all Month except Jan and March
-        else if(indMM < 8 && indMM%2 == 1 && indMM!= 1){
-          azDD = 30;
-          azMM = indMM-1;
-          azYYYY = indYYYY;
-        }
-        else if(indMM < 8 && indMM%2 == 0 && indMM!= 1){
-          azDD = 31;
-          azMM = indMM-1;
-          azYYYY = indYYYY;
-        }
-        else if(indMM > 7 && indMM%2 == 0){
-          azDD = 30;
-          azMM = indMM-1;
-          azYYYY = indYYYY;
-        }
-        else if(indMM > 7 && indMM%2 == 1){
-          azDD = 31;
-          azMM = indMM-1;
-          azYYYY = indYYYY;
-        }
-      }
-    }
-    else{
-      azDD = indDD-1;
-      azMM = indMM;
-      azYYYY = indYYYY;
-    }
-    azDate = String(azDD).padStart(2 , '0') + '/' + String(azMM).padStart(2, '0') + '/' + indYYYY;
   }
-  //  If 'PM'
-  else{
-    azDD = indDD;
-    azMM = indMM;
-    azYYYY = indYYYY;
-    azDate = String(azDD).padStart(2 , '0') + '/' + String(azMM).padStart(2, '0') + '/' + indYYYY;
-  }    
+  xmlHttp.open("GET", url, true); // true for asynchronous
+  xmlHttp.send(null);
+}
 
+var url = "https://timezone.abstractapi.com/v1/current_time/?api_key=2fc8eda074b24b7b84c6b5bf72e0d236&location=Arizona, United States America"
 
-  // Converting Time for Arizona
-
-  if(indMIN >= 30){
-    azHR = indHR;
-    azMIN = (parseInt(indMIN) - 30);
-    if(ind_AM_PM == "AM"){
-      az_AM_PM = "PM";
-    }
-    else{
-        az_AM_PM = "AM";
-    }
-  }
-  else{
-    azHR = parseInt(indHR) - 1;
-    azMIN = (parseInt(indMIN) + 30);
-
-    if(ind_AM_PM == "AM"){
-      az_AM_PM = "PM";
-    }
-    else{
-      az_AM_PM = "AM";
-    }
-  }
-
-  // Concatination of Arizona time
-  let azHRstr = azHR.toString();
-  let azMINstr = azMIN.toString();
-  aztime = azHRstr.concat(":", azMINstr).concat(" ", az_AM_PM);
-
+httpGetAsync(url);
 
   // Display Time and Date (Arizona)
-  displayAZtime(aztime);
-  displayAzDate(azDate);
 });
 
 function displayTime(time) {
@@ -147,7 +59,7 @@ setInterval(function () {
   var today = new Date();
   var time = today.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   document.getElementById("time").innerHTML = time;
-}, 100);
+}, 1000);
 
 const search_engines = [{
   src: "goog.svg",

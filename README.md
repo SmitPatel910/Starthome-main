@@ -7,7 +7,7 @@
 
 ## About
 Customized HomePage is a minimalistic and simp startpage with a navigation bar with 4 search engines and icons as buttons redirecting to desired site.
-<p> Hosted version of the webpage - <a href="https://bejewelled-seahorse-46f268.netlify.app/"></a> </p>
+<p> Hosted version of the webpage - <a href="https://bejewelled-seahorse-46f268.netlify.app/">Netlify</a></p>
 
 ## Preview
 <img src="readmesrc/ss.png">

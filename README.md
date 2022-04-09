@@ -1,8 +1,4 @@
 <h1>Starthome</h1>
-<p align="center">
-  <img width="100px" src="readmesrc/av.png" />
-</p>
-
 
 <p align="center">
 <a href="#About"><img src="readmesrc/about.png" width="30%"></a>
@@ -26,20 +22,6 @@ Starthome is a minimalistic and simp startpage/homepage with a navigation bar wi
 <p>
 <ul>
 
-1. Install the extension - 
-  <li><a href="https://chrome.google.com/webstore/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna">chrome</a></li>
-  <li><a href="https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/">firefox</a></li>
- 
-2. Install the Startpage zip and unzip it
-
-3. Open the index.html file
-
-4. Copy the file location in the url box
-5. Paste it in the Extensions url box and save it
-6. Done
-</ul>
-</p>
-<h2>Hosted</h2>
 <p>
 Same thing but enter the url of the website (https://starthome.netlify.app) in the url box while editing the extension settings
 </p>

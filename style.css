@@ -27,6 +27,13 @@ h2 {
   display: inline-flex;
   justify-content: space-around;
 }
+.disable-select{
+  user-select: none;
+   -webkit-user-select: none; 
+   -khtml-user-select: none; 
+   -moz-user-select: none; 
+   -ms-user-select: none; 
+}
 
 
 
@@ -45,7 +52,7 @@ h2 {
 }
 
 .mid-circle {
-    fill: rgb(0, 0, 0);
+    fill:   rgb(0, 0, 0);
 }
 .hour-marks {
     fill: none;

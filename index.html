@@ -10,7 +10,7 @@
 
 <body>
 
-  <div class="clockWrapper">
+  <div class="clockWrapper disable-select">
     
     <div class="clockbox">
       <svg id="clock" xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
@@ -64,7 +64,7 @@
 
 <div class="search_block disable-select">
   <form id="search_eng_form" method="get" action="https://www.google.com/search?q=">
-      <button type="button" class="se_btn" id="se_button"><img id="se_icon" src="icons/goog.svg" class="filter-white"></button><input type="search" id="search" placeholder="Searching with Google" autocomplete="off" name="q" autofocus><button type="submit" class="go" id="go_btn">GO</button>
+      <button type="button" class="se_btn" id="se_button"><img id="se_icon" draggable="false" src="icons/goog.svg" class="filter-white"></button><input type="search" id="search" placeholder="Searching with Google" autocomplete="off" name="q" autofocus><button type="submit" class="go" id="go_btn">GO</button>
   </form>
 </div>
 

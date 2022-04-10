@@ -28,13 +28,13 @@ h2 {
   display: inline-flex;
   justify-content: space-around;
 }
-.disable-select{
+/* .disable-select{
   user-select: none;
    -webkit-user-select: none; 
    -khtml-user-select: none; 
    -moz-user-select: none; 
    -ms-user-select: none; 
-}
+} */
 
 
 

@@ -8,6 +8,7 @@ body {
   position: absolute;
   top: 20%;
   transform: translateY(-30%);
+  max-width: 100vh;
 }
 
 h1 {

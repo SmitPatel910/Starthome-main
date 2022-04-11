@@ -1,49 +1,92 @@
-// window.addEventListener('load', (event) => {
+// Arizona Time Fetch API
+let url = "https://timezone.abstractapi.com/v1/current_time/?api_key=2fc8eda074b24b7b84c6b5bf72e0d236&location=Arizona, United States America";
 
-//   // Variable Declare 
-//   let Indtoday, indtime, indDD, indMM, indYYYY, indDate, arizonaTime;
- 
-//   Indtoday = new Date();
-//   indtime = Indtoday.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  
-//   indDD = String(Indtoday.getDate()).padStart(2, '0');
-//   indMM = String(Indtoday.getMonth() + 1).padStart(2, '0'); //January is 0!
-//   indYYYY = Indtoday.getFullYear();
-//   indDate = indDD + '/' + indMM + '/' + indYYYY;
+window.addEventListener('load', (event) => {
+  // India Digital time and Date
+  IndiaTimeDate();
+  // Arizona Digital time and Date
+  ArizonaTimeDate(url);
+});
 
-//   // Display Time and Date (India)
-//   displayTime(indtime);
-//   displayIndDate(indDate);
+// Variable for India Digital Time
+const HOURHAND = document.querySelector("#hour");
+const MINUTEHAND = document.querySelector("#minute");
+const SECONDHAND = document.querySelector("#second");
+let hrPosition, minPosition, secPosition;
 
+// Variable for Arizona Digital Time
+const HOURHANDD = document.querySelector("#hourr");
+const MINUTEHANDD = document.querySelector("#minutee");
+const SECONDHANDD = document.querySelector("#secondd");
+let hrPositionn, minPositionn, secPositionn;
 
-// var url = "https://timezone.abstractapi.com/v1/current_time/?api_key=2fc8eda074b24b7b84c6b5bf72e0d236&location=Arizona, United States America"
-// httpGetAsyncc(url);
-//   function httpGetAsyncc(url) {
-//     var xmlHttp = new XMLHttpRequest();
-//     xmlHttp.onreadystatechange = function() {
-//         if (xmlHttp.readyState === 4 && xmlHttp.status === 200){
-//           var fetch = JSON.parse(xmlHttp.responseText);
-//           arizonaTime = new Date(fetch.datetime);
-//           azTime = arizonaTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-//           azDate = String(arizonaTime.getDate()).padStart(2, '0') + '/' + String(arizonaTime.getMonth()+ 1).padStart(2, '0') + '/' + String(arizonaTime.getFullYear()).padStart(2, '0');
-//           displayAZtime(azTime);
-//           displayAzDate(azDate);
-//         }
-//     }
-//     xmlHttp.open("GET", url, true); // true for asynchronous
-//     xmlHttp.send(null);
-//   }
+// Function to calculate India time and Date
+function IndiaTimeDate(){
+  var date = new Date();
+  // Date 
+  let indDD = String(date.getDate()).padStart(2, '0');
+  let indMM = String(date.getMonth() + 1).padStart(2, '0');
+  let indYYYY = date.getFullYear();
+  let indDate = indDD + '/' + indMM + '/' + indYYYY;
+  // Digital time
+  indtime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  // Print Digital time and Date
+  displayIndDate(indtime,indDate);
 
-// });
+  // Analog time
+  let hr = date.getHours();
+  let min = date.getMinutes();
+  let sec = date.getSeconds();
+  hrPosition = (hr*360/12 + (min*(360/60)/12)), minPosition = ((min*360/60) + (sec*(360/60)/60)), secPosition = sec*360/60;
 
-// function displayTime(time) {
-//   document.getElementById("indTime").innerHTML = time;
-// }
+  secPosition += 6;
+  minPosition += (6/60);
+  hrPosition += (3/360);
 
+  HOURHAND.style.transform = "rotate(" + hrPosition + "deg)";
+  MINUTEHAND.style.transform = "rotate(" + minPosition + "deg)";
+  SECONDHAND.style.transform = "rotate(" + secPosition + "deg)";
+}
 
-// function displayAZtime(azTime) {
-//   document.getElementById("AZtime").innerHTML = azTime;
-// }
+// Function to calculate Arizona time and Date
+function ArizonaTimeDate(url) {
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState === 4 && xmlHttp.status === 200){
+        var fetch = JSON.parse(xmlHttp.responseText);
+        arizonaTime = new Date(fetch.datetime);
+        // Date
+        azDate = String(arizonaTime.getDate()).padStart(2, '0') + '/' + String(arizonaTime.getMonth()+ 1).padStart(2, '0') + '/' + String(arizonaTime.getFullYear()).padStart(2, '0');
+        // Digital time
+        azTime = arizonaTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        // Print Digital time and Date
+        displayAzDate(azTime,azDate);
+        
+        // Analog time
+        let hrr = arizonaTime.getHours();
+        let minn = arizonaTime.getMinutes();
+        let secc = arizonaTime.getSeconds();
+        hrPositionn = (hrr*360/12 + (minn*(360/60)/12)), minPositionn = ((minn*360/60) + (secc*(360/60)/60)), secPositionn = secc*360/60;
+        
+        secPositionn += 6;
+        minPositionn += (6/60);
+        hrPositionn += (3/360);
+
+        HOURHANDD.style.transform = "rotate(" + hrPositionn + "deg)";
+        MINUTEHANDD.style.transform = "rotate(" + minPositionn + "deg)";
+        SECONDHANDD.style.transform = "rotate(" + secPositionn + "deg)"; 
+      }
+  }
+  xmlHttp.open("GET", url, true); // true for asynchronous
+  xmlHttp.send(null);
+}
+function runTheClock() {
+  // Calculate India time and Date in 10 second duration
+  IndiaTimeDate();  
+  // Calculate Arizona time and Date in 10 second duration
+  ArizonaTimeDate(url);
+}
+var interval = setInterval(runTheClock, 1000);
 
 function displayIndDate(indtime, indDate) {
   let op = indtime + " - " + indDate;
@@ -55,11 +98,13 @@ function displayAzDate(azTime, azDate) {
   document.getElementById("azDate").innerHTML = op2;
 }
 
-// setInterval(function () {
-//   var today = new Date();
-//   var time = today.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-//   document.getElementById("time").innerHTML = time;
-// }, 1000);
+const cycleSearchEngines = se => {
+  const curData = search_engines[(se+1) % search_engines.length];
+
+  document.getElementById("se_icon").src = "icons/" + curData.src;
+  document.getElementById("search").placeholder = "Searching with " + curData.placeholder;
+  document.getElementById("search_eng_form").action = curData.action;
+};
 
 const search_engines = [{
   src: "goog.svg",
@@ -78,86 +123,3 @@ const search_engines = [{
   placeholder: "YouTube",
   action: "https://www.youtube.com/results?q="
 }];
-
-const cycleSearchEngines = se => {
-  const curData = search_engines[(se+1) % search_engines.length];
-
-  document.getElementById("se_icon").src = "icons/" + curData.src;
-  document.getElementById("search").placeholder = "Searching with " + curData.placeholder;
-  document.getElementById("search_eng_form").action = curData.action;
-};
-
-
-
-const HOURHAND = document.querySelector("#hour");
-const MINUTEHAND = document.querySelector("#minute");
-const SECONDHAND = document.querySelector("#second");
-
-    var date = new Date();
-
-    let hr = date.getHours();
-    let min = date.getMinutes();
-    let sec = date.getSeconds();
-
-    let hrPosition = (hr*360/12 + (min*(360/60)/12)), minPosition = ((min*360/60) + (sec*(360/60)/60)), secPosition = sec*360/60;
-
-    let indDD = String(date.getDate()).padStart(2, '0');
-    let indMM = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let indYYYY = date.getFullYear();
-    let indDate = indDD + '/' + indMM + '/' + indYYYY;
-    indtime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  displayIndDate(indtime,indDate);
-
-
-
-
-// ===============================================================================================================================================================
-
-
-
-const HOURHANDD = document.querySelector("#hourr");
-const MINUTEHANDD = document.querySelector("#minutee");
-const SECONDHANDD = document.querySelector("#secondd");
-let hrPositionn, minPositionn, secPositionn;
-var url = "https://timezone.abstractapi.com/v1/current_time/?api_key=2fc8eda074b24b7b84c6b5bf72e0d236&location=Arizona, United States America"
-httpGetAsyncv(url);
-  function httpGetAsyncv(url) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState === 4 && xmlHttp.status === 200){
-          var fetch = JSON.parse(xmlHttp.responseText);
-          arizonaTime = new Date(fetch.datetime);
-          let hrr = arizonaTime.getHours();
-          let minn = arizonaTime.getMinutes();
-          let secc = arizonaTime.getSeconds();
-          hrPositionn = (hrr*360/12 + (min*(360/60)/12)), minPositionn = ((minn*360/60) + (secc*(360/60)/60)), secPositionn = secc*360/60;
-          azTime = arizonaTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          azDate = String(arizonaTime.getDate()).padStart(2, '0') + '/' + String(arizonaTime.getMonth()+ 1).padStart(2, '0') + '/' + String(arizonaTime.getFullYear()).padStart(2, '0');
-          displayAzDate(azTime,azDate);
-        }
-    }
-    xmlHttp.open("GET", url, true); // true for asynchronous
-    xmlHttp.send(null);
-  }
-
-function runTheClock() {
-
-    secPosition += 6;
-    minPosition += (6/60);
-    hrPosition += (3/360);
-
-    HOURHAND.style.transform = "rotate(" + hrPosition + "deg)";
-    MINUTEHAND.style.transform = "rotate(" + minPosition + "deg)";
-    SECONDHAND.style.transform = "rotate(" + secPosition + "deg)";
-
-    secPositionn += 6;
-    minPositionn += (6/60);
-    hrPositionn += (3/360);
-
-    HOURHANDD.style.transform = "rotate(" + hrPositionn + "deg)";
-    MINUTEHANDD.style.transform = "rotate(" + minPositionn + "deg)";
-    SECONDHANDD.style.transform = "rotate(" + secPositionn + "deg)";
-
-}
-
-var interval = setInterval(runTheClock, 1000);

@@ -1,5 +1,6 @@
 // Arizona Time Fetch API
-let url = "https://timezone.abstractapi.com/v1/current_time/?api_key=2fc8eda074b24b7b84c6b5bf72e0d236&location=Arizona, United States America";
+// let url = "https://timezone.abstractapi.com/v1/current_time/?api_key=2fc8eda074b24b7b84c6b5bf72e0d236&location=Arizona, United States America";
+let url = "http://worldtimeapi.org/api/timezone/America/Phoenix";
 
 window.addEventListener('load', (event) => {
   // India Digital time and Date
@@ -29,7 +30,7 @@ function IndiaTimeDate(){
   let indYYYY = date.getFullYear();
   let indDate = indDD + '/' + indMM + '/' + indYYYY;
   // Digital time
-  indtime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  indtime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' },'en-GB');
   // Print Digital time and Date
   displayIndDate(indtime,indDate);
 
@@ -54,14 +55,30 @@ function ArizonaTimeDate(url) {
   xmlHttp.onreadystatechange = function() {
       if (xmlHttp.readyState === 4 && xmlHttp.status === 200){
         var fetch = JSON.parse(xmlHttp.responseText);
-        arizonaTime = new Date(fetch.datetime);
+        // Now we will change input parameter to convert into Date Object
+        // First extract Date from object
+        var dt = fetch.datetime.split('T')[0];
+        var azyy = dt.split('-')[0];
+        var azmm = dt.split('-')[1];
+        var azdd = dt.split('-')[2];
+        azDate = azyy.concat("-", azmm).concat("-", azdd);
+        // Now extract time from Object
+        var azhr = fetch.datetime.split('T')[1].split('.')[0].split(':')[0];
+        var azmin = fetch.datetime.split('T')[1].split('.')[0].split(':')[1];
+        var azsec = fetch.datetime.split('T')[1].split('.')[0].split(':')[2];
+        azTime = azhr.concat(":",azmin).concat(":", azsec);
+        // Now concat azDate and azTime then pass into Date Object
+        var azDateTime = azDate.concat(" ", azTime);
+        arizonaTime = new Date(azDateTime);
+        console.log(arizonaTime);
+
         // Date
         azDate = String(arizonaTime.getDate()).padStart(2, '0') + '/' + String(arizonaTime.getMonth()+ 1).padStart(2, '0') + '/' + String(arizonaTime.getFullYear()).padStart(2, '0');
         // Digital time
         azTime = arizonaTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         // Print Digital time and Date
         displayAzDate(azTime,azDate);
-        
+
         // Analog time
         let hrr = arizonaTime.getHours();
         let minn = arizonaTime.getMinutes();

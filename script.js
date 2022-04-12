@@ -1,6 +1,6 @@
 // Arizona Time Fetch API
 // let url = "https://timezone.abstractapi.com/v1/current_time/?api_key=2fc8eda074b24b7b84c6b5bf72e0d236&location=Arizona, United States America";
-let url = "http://worldtimeapi.org/api/timezone/America/Phoenix";
+let urll = "http://worldtimeapi.org/api/timezone/America/Phoenix";
 
 window.addEventListener('load', (event) => {
   // India Digital time and Date

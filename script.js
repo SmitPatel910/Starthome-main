@@ -6,7 +6,7 @@ window.addEventListener('load', (event) => {
   // India Digital time and Date
   IndiaTimeDate();
   // Arizona Digital time and Date
-  ArizonaTimeDate(url);
+  ArizonaTimeDate(urll);
 });
 
 // Variable for India Digital Time
@@ -99,7 +99,7 @@ function runTheClock() {
   // Calculate India time and Date in 10 second duration
   IndiaTimeDate();  
   // Calculate Arizona time and Date in 10 second duration
-  ArizonaTimeDate(url);
+  ArizonaTimeDate(urll);
 }
 var interval = setInterval(runTheClock, 1000);
 

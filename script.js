@@ -50,53 +50,51 @@ function IndiaTimeDate(){
 }
 
 // Function to calculate Arizona time and Date
-function ArizonaTimeDate(url) {
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.onreadystatechange = function() {
-      if (xmlHttp.readyState === 4 && xmlHttp.status === 200){
-        var fetch = JSON.parse(xmlHttp.responseText);
-        // Now we will change input parameter to convert into Date Object
-        // First extract Date from object
-        var dt = fetch.datetime.split('T')[0];
-        var azyy = dt.split('-')[0];
-        var azmm = dt.split('-')[1];
-        var azdd = dt.split('-')[2];
-        azDate = azyy.concat("-", azmm).concat("-", azdd);
-        // Now extract time from Object
-        var azhr = fetch.datetime.split('T')[1].split('.')[0].split(':')[0];
-        var azmin = fetch.datetime.split('T')[1].split('.')[0].split(':')[1];
-        var azsec = fetch.datetime.split('T')[1].split('.')[0].split(':')[2];
-        azTime = azhr.concat(":",azmin).concat(":", azsec);
-        // Now concat azDate and azTime then pass into Date Object
-        var azDateTime = azDate.concat(" ", azTime);
-        arizonaTime = new Date(azDateTime);
-        console.log(arizonaTime);
+async function ArizonaTimeDate(url) {
+  // var xmlHttp = new XMLHttpRequest();
+  // var fetch = JSON.parse(xmlHttp.responseText);
+  var data = await fetch(url);
+  var jsonData = await data.json();
+  // console.log(jsonData);
+  // Now we will change input parameter to convert into Date Object
+  // First extract Date from object
+  var dt = jsonData.datetime.split('T')[0];
+  var azyy = dt.split('-')[0];
+  var azmm = dt.split('-')[1];
+  var azdd = dt.split('-')[2];
+  azDate = azyy.concat("-", azmm).concat("-", azdd);
+  // Now extract time from Object
+  var azhr = jsonData.datetime.split('T')[1].split('.')[0].split(':')[0];
+  var azmin = jsonData.datetime.split('T')[1].split('.')[0].split(':')[1];
+  var azsec = jsonData.datetime.split('T')[1].split('.')[0].split(':')[2];
+  azTime = azhr.concat(":",azmin).concat(":", azsec);
+  // Now concat azDate and azTime then pass into Date Object
+  var azDateTime = azDate.concat(" ", azTime);
+  arizonaTime = new Date(azDateTime);
 
-        // Date
-        azDate = String(arizonaTime.getDate()).padStart(2, '0') + '/' + String(arizonaTime.getMonth()+ 1).padStart(2, '0') + '/' + String(arizonaTime.getFullYear()).padStart(2, '0');
-        // Digital time
-        azTime = arizonaTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        // Print Digital time and Date
-        displayAzDate(azTime,azDate);
+  // Date
+  azDate = String(arizonaTime.getDate()).padStart(2, '0') + '/' + String(arizonaTime.getMonth()+ 1).padStart(2, '0') + '/' + String(arizonaTime.getFullYear()).padStart(2, '0');
+  // Digital time
+  azTime = arizonaTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  // Print Digital time and Date
+  displayAzDate(azTime,azDate);
 
-        // Analog time
-        let hrr = arizonaTime.getHours();
-        let minn = arizonaTime.getMinutes();
-        let secc = arizonaTime.getSeconds();
-        hrPositionn = (hrr*360/12 + (minn*(360/60)/12)), minPositionn = ((minn*360/60) + (secc*(360/60)/60)), secPositionn = secc*360/60;
-        
-        secPositionn += 6;
-        minPositionn += (6/60);
-        hrPositionn += (3/360);
+  // Analog time
+  let hrr = arizonaTime.getHours();
+  let minn = arizonaTime.getMinutes();
+  let secc = arizonaTime.getSeconds();
+  hrPositionn = (hrr*360/12 + (minn*(360/60)/12)), minPositionn = ((minn*360/60) + (secc*(360/60)/60)), secPositionn = secc*360/60;
+  
+  secPositionn += 6;
+  minPositionn += (6/60);
+  hrPositionn += (3/360);
 
-        HOURHANDD.style.transform = "rotate(" + hrPositionn + "deg)";
-        MINUTEHANDD.style.transform = "rotate(" + minPositionn + "deg)";
-        SECONDHANDD.style.transform = "rotate(" + secPositionn + "deg)"; 
-      }
+  HOURHANDD.style.transform = "rotate(" + hrPositionn + "deg)";
+  MINUTEHANDD.style.transform = "rotate(" + minPositionn + "deg)";
+  SECONDHANDD.style.transform = "rotate(" + secPositionn + "deg)"; 
   }
-  xmlHttp.open("GET", url, true); // true for asynchronous
-  xmlHttp.send(null);
-}
+
+
 function runTheClock() {
   // Calculate India time and Date in 10 second duration
   IndiaTimeDate();  

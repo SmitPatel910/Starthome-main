@@ -1,12 +1,13 @@
 // Arizona Time Fetch API
 // let url = "https://timezone.abstractapi.com/v1/current_time/?api_key=2fc8eda074b24b7b84c6b5bf72e0d236&location=Arizona, United States America";
-let urll = "http://worldtimeapi.org/api/timezone/America/Phoenix";
+let AzUrl = "http://worldtimeapi.org/api/timezone/America/Phoenix";
+let IndiaUrl = "http://worldtimeapi.org/api/timezone/Asia/Kolkata";
 
 window.addEventListener('load', (event) => {
   // India Digital time and Date
-  IndiaTimeDate();
+  IndiaTimeDate(IndiaUrl);
   // Arizona Digital time and Date
-  ArizonaTimeDate(urll);
+  ArizonaTimeDate(AzUrl);
 });
 
 // Variable for India Digital Time
@@ -22,32 +23,51 @@ const SECONDHANDD = document.querySelector("#secondd");
 let hrPositionn, minPositionn, secPositionn;
 
 // Function to calculate India time and Date
-function IndiaTimeDate(){
-  var date = new Date();
-  // Date 
-  let indDD = String(date.getDate()).padStart(2, '0');
-  let indMM = String(date.getMonth() + 1).padStart(2, '0');
-  let indYYYY = date.getFullYear();
-  let indDate = indDD + '/' + indMM + '/' + indYYYY;
+async function IndiaTimeDate(IndiaUrl) {
+  var inddata = await fetch(IndiaUrl);
+
+  var indjsonData = await inddata.json();
+  // Now we will change input parameter to convert into Date Object
+  // First extract Date from object
+  var inddt = indjsonData.datetime.split('T')[0];
+  var indyy = inddt.split('-')[0];
+  var indmm = inddt.split('-')[1];
+  var inddd = inddt.split('-')[2];
+  indDate = indyy.concat("-", indmm).concat("-", inddd);
+  // Now extract time from Object
+  var indhr = indjsonData.datetime.split('T')[1].split('.')[0].split(':')[0];
+  var indmin = indjsonData.datetime.split('T')[1].split('.')[0].split(':')[1];
+  var indsec = indjsonData.datetime.split('T')[1].split('.')[0].split(':')[2];
+  indTime = indhr.concat(":",indmin).concat(":", indsec);
+  // Now concat azDate and azTime then pass into Date Object
+  var indDateTime = indTime.concat(" ", indDate);
+  indTimeObj = new Date(indDateTime);
+
+  // Date
+  inddDate = String(indTimeObj.getDate()).padStart(2, '0') + '/' + String(indTimeObj.getMonth()+ 1).padStart(2, '0') + '/' + String(indTimeObj.getFullYear()).padStart(2, '0');
   // Digital time
-  indtime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' },'en-GB');
+  inddTime = indTimeObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   // Print Digital time and Date
-  displayIndDate(indtime,indDate);
+  displayIndDate(inddTime,inddDate);
 
   // Analog time
-  let hr = date.getHours();
-  let min = date.getMinutes();
-  let sec = date.getSeconds();
+  let hr = indTimeObj.getHours();
+  let min = indTimeObj.getMinutes();
+  let sec = indTimeObj.getSeconds();
   hrPosition = (hr*360/12 + (min*(360/60)/12)), minPosition = ((min*360/60) + (sec*(360/60)/60)), secPosition = sec*360/60;
-
-  secPosition += 6;
-  minPosition += (6/60);
-  hrPosition += (3/360);
+  
+  secPositionn += 6;
+  minPositionn += (6/60);
+  hrPositionn += (3/360);
 
   HOURHAND.style.transform = "rotate(" + hrPosition + "deg)";
   MINUTEHAND.style.transform = "rotate(" + minPosition + "deg)";
-  SECONDHAND.style.transform = "rotate(" + secPosition + "deg)";
-}
+  SECONDHAND.style.transform = "rotate(" + secPosition + "deg)"; 
+  }
+
+
+
+
 
 // Function to calculate Arizona time and Date
 async function ArizonaTimeDate(url) {
@@ -97,9 +117,9 @@ async function ArizonaTimeDate(url) {
 
 function runTheClock() {
   // Calculate India time and Date in 10 second duration
-  IndiaTimeDate();  
+  IndiaTimeDate(IndiaUrl);  
   // Calculate Arizona time and Date in 10 second duration
-  ArizonaTimeDate(urll);
+  ArizonaTimeDate(AzUrl);
 }
 var interval = setInterval(runTheClock, 1000);
 
